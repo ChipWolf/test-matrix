@@ -18,5 +18,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: [release-please]
+    strategy:
+      matrix:
+        path: ${{ fromJSON(fromJSON(needs.release-please.outputs.manifest).paths_released) }}
     steps:
-      - run: echo '${{ fromJSON(needs.release-please.outputs.manifest) }}'
+      - run: echo '${{ matrix.path }}'
