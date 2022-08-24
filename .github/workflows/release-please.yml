@@ -16,11 +16,14 @@ jobs:
         with:
           command: manifest
   test:
+    env:
+      manifest: ${{ fromJSON(needs.release-please.outputs.manifest) }}
     if: ${{ fromJSON(needs.release-please.outputs.manifest).releases_created }}
     needs: [release-please]
     strategy:
       matrix:
-        path: ${{ fromJSON(fromJSON(needs.release-please.outputs.manifest).paths_released) }}
+        path: ${{ fromJSON(env.manifest.paths_released) }}
     uses: ./.github/workflows/test-template.yml
     with:
-      path: ${{ matrix.path }}
+      foo: ${{ matrix.path }}
+      bar: ${{ env.manifest[format('{0}--tag_name', matrix.path] }}
