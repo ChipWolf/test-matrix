@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0](https://github.com/ChipWolf/test-matrix/compare/c-c-v0.6.0...c-c-v0.7.0) (2022-08-24)
+
+
+### Features
+
+* **test:** test6 ([4298195](https://github.com/ChipWolf/test-matrix/commit/4298195dc0cd27bdc993a8d3709f52839f8ecba1))
+* **test:** test7 ([4710a40](https://github.com/ChipWolf/test-matrix/commit/4710a40adbbf22780b41d73aa9701dd9cfe62df3))
+* **test:** test8 ([62c4368](https://github.com/ChipWolf/test-matrix/commit/62c43688fb7b548f8081534bdaa2c80221803858))
+
 ## [0.6.0](https://github.com/ChipWolf/test-matrix/compare/c-c-v0.5.0...c-c-v0.6.0) (2022-08-24)
 
 
