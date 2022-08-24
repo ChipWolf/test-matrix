@@ -18,7 +18,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: [release-please]
-    if: ${{ contains(fromJSON(needs.release-please.outputs.manifest), 'paths_released') }}
+    if: ${{ fromJSON(needs.release-please.outputs.manifest).releases_created }}
     strategy:
       matrix:
         path: ${{ fromJSON(fromJSON(needs.release-please.outputs.manifest).paths_released) }}
