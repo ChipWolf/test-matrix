@@ -1,0 +1,41 @@
+{
+    "packages": {
+      "a/a": {
+        "package-name": "a-a",
+        "release-type": "simple"
+      },
+      "a/b": {
+        "package-name": "a-b",
+        "release-type": "simple"
+      },
+      "a/c": {
+        "package-name": "a-c",
+        "release-type": "simple"
+      },
+      "b/a": {
+        "package-name": "b-a",
+        "release-type": "simple"
+      },
+      "b/b": {
+        "package-name": "b-b",
+        "release-type": "simple"
+      },
+      "b/c": {
+        "package-name": "b-c",
+        "release-type": "simple"
+      },
+      "c/a": {
+        "package-name": "c-a",
+        "release-type": "simple"
+      },
+      "c/b": {
+        "package-name": "c-b",
+        "release-type": "simple"
+      },
+      "c/c":{
+        "package-name": "c-c",
+        "release-type": "simple"
+      }
+    }
+  }
+  
