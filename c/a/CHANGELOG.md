@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/ChipWolf/test-matrix/compare/c-a-v0.5.0...c-a-v0.6.0) (2022-08-24)
+
+
+### Features
+
+* **test:** test4 ([5d5003d](https://github.com/ChipWolf/test-matrix/commit/5d5003db25560f26cdb0ce9f696b918f650b64cb))
+
 ## [0.5.0](https://github.com/ChipWolf/test-matrix/compare/c-a-v0.4.0...c-a-v0.5.0) (2022-08-24)
 
 
