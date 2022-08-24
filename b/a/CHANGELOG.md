@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/ChipWolf/test-matrix/compare/b-a-v0.6.0...b-a-v0.7.0) (2022-08-24)
+
+
+### Features
+
+* **test:** test6 ([e6365f6](https://github.com/ChipWolf/test-matrix/commit/e6365f6dfd22d57083b4eb201760dc141d707c75))
+
 ## [0.6.0](https://github.com/ChipWolf/test-matrix/compare/b-a-v0.5.0...b-a-v0.6.0) (2022-08-24)
 
 
