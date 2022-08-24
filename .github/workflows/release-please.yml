@@ -18,11 +18,9 @@ jobs:
   test:
     if: ${{ fromJSON(needs.release-please.outputs.manifest).releases_created }}
     needs: [release-please]
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         path: ${{ fromJSON(fromJSON(needs.release-please.outputs.manifest).paths_released) }}
-    steps:
-      - uses: ./.github/workflows/test-template.yaml
-        with:
-          path: ${{ matrix.path }}
+    uses: ./.github/workflows/test-template.yaml
+    with:
+      path: ${{ matrix.path }}
