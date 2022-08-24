@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      tag_name: ${{ inputs.bar[format('{0}--tag_name', inputs.foo)] }}
-      upload_url:  ${{ inputs.bar[format('{0}--upload_url', inputs.foo)] }}
+      tag_name: ${{ fromJSON(inputs.bar)[format('{0}--tag_name', inputs.foo)] }}
+      upload_url:  ${{ fromJSON(inputs.bar)[format('{0}--upload_url', inputs.foo)] }}
     steps:
       - run: echo '${{ inputs.foo }} ${{ env.tag_name }} ${{ env.upload_url }} ${{ secrets.ACTIONS_STEP_DEBUG }}'
