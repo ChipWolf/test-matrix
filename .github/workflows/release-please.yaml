@@ -1,0 +1,22 @@
+---
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ toJSON(steps.rp.outputs) }}
+    steps:
+      - id: rp
+        uses: GoogleCloudPlatform/release-please-action@v3.3.0
+        with:
+          command: manifest
+  test:
+    runs-on: ubuntu-latest
+    needs: [release-please]
+    steps:
+      - run: echo ${{ needs.release-please.outputs.output }}
