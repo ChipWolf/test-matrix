@@ -1,0 +1,16 @@
+---
+on:
+  workflow_call:
+    inputs:
+      foo:
+        required: true
+        type: string
+      bar:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ inputs.foo }} ${{ inputs.bar }} ${{ secrets.ACTIONS_STEP_DEBUG }}'

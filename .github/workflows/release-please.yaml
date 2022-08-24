@@ -22,4 +22,6 @@ jobs:
       matrix:
         path: ${{ fromJSON(fromJSON(needs.release-please.outputs.manifest).paths_released) }}
     steps:
-      - run: echo '${{ matrix.path }}'
+       - uses: ./.github/workflows/test-template.yml
+         with:
+           path: ${{ matrix.path }}
