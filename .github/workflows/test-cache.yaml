@@ -44,4 +44,4 @@ jobs:
           path: test
           key: bar
       - run: mkdir after; rsync -av run after
-      - run: ls -la *
+      - run: ls -la **/**
