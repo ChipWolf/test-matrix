@@ -17,7 +17,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: test
-          key: foo
+          key: foo-${{ github.run_id }}
       - run: mkdir run; touch run/foo
   cache-2:
     needs: [cache-1]
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: test
-          key: bar
+          key: bar-${{ github.run_id }}
       - run: mkdir run; touch run/bar
   cache-3:
     needs: [cache-1, cache-2]
@@ -37,11 +37,11 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: test
-          key: foo
+          key: foo-${{ github.run_id }}
       - run: mkdir before; rsync -av run before
       - uses: actions/cache@v3
         with:
           path: test
-          key: bar
+          key: bar-${{ github.run_id }}
       - run: mkdir after; rsync -av run after
       - run: ls -la **/**
