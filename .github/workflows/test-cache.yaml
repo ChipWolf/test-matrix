@@ -38,10 +38,10 @@ jobs:
         with:
           path: test
           key: foo-${{ github.run_id }}
-      - run: mkdir before; rsync -av run before
+      - run: mkdir before; rsync -av run/ before; rm -rf run
       - uses: actions/cache@v3
         with:
           path: test
           key: bar-${{ github.run_id }}
-      - run: mkdir after; rsync -av run after
+      - run: mkdir after; rsync -av run/ after; rm -rf run
       - run: ls -la **/**
