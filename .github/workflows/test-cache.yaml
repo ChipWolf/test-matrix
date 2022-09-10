@@ -3,6 +3,11 @@ name: Test Cache
 
 on:
   push:
+    branches: [main]
+
+defaults:
+ run:
+  working-directory: ./test
 
 jobs:
   cache-1:
@@ -12,7 +17,8 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: test
-          key: test
+          key: foo
+      - run: mkdir run; touch run/foo
   cache-2:
     needs: [cache-1]
     runs-on: ubuntu-22.04
@@ -21,6 +27,21 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: test
-          key: test
-        working-directory: test
-      - run: ls -la test; ls -la test/test
+          key: bar
+      - run: mkdir run; touch run/bar
+  cache-3:
+    needs: [cache-1, cache-2]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: test
+          key: foo
+      - run: mkdir before; rsync -av run before
+      - uses: actions/cache@v3
+        with:
+          path: test
+          key: bar
+      - run: mkdir after; rsync -av run after
+      - run: ls -la *
