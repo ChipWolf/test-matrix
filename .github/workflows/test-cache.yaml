@@ -9,12 +9,9 @@ defaults:
  run:
   working-directory: ./test
 
-env:
-  pr: 1
-
 jobs:
   cache-1:
-    if: ${{ env.pr }}
+    if: 1
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
