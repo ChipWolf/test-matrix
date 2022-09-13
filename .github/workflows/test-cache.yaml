@@ -11,7 +11,7 @@ defaults:
 
 jobs:
   cache-1:
-    if: 1
+    if: false
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
