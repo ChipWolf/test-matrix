@@ -11,6 +11,8 @@ defaults:
 
 jobs:
   cache-1:
+    env:
+      continue: true
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -18,7 +20,8 @@ jobs:
         with:
           path: test
           key: foo-${{ github.run_id }}
-      - run: mkdir run; touch run/foo
+      - continue-on-fail: ${{ env.continue }}
+        run: mkdir run; touch run/foo; exit 1
   cache-2:
     needs: [cache-1]
     runs-on: ubuntu-22.04
