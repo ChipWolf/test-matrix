@@ -1,0 +1,14 @@
+---
+name: Test Parallel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./run.sh | tee >(while true; do echo running; sleep 1; done)
