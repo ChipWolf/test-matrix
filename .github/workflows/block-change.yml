@@ -1,0 +1,62 @@
+name: Filter human changes to server
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  paths:
+    if: ${{ !contains(github.actor, '[bot]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            server:
+              - added|deleted: 'server/**'
+      - name: Check if files were added or deleted by a human
+        if: steps.filter.outputs.server == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const files = ${{ steps.filter.outputs.changed_files }};
+            const commits = await github.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+            const changes = {};
+            for (const commit of commits.data) {
+              const commitDetails = await github.repos.getCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: commit.sha,
+              });
+              for (const file of files) {
+                const foundFile = commitDetails.data.files.find((f) => f.filename === file);
+                if (foundFile) {
+                  changes[file] = changes[file] || [];
+                  changes[file].push({
+                    sha: commit.sha,
+                    added: foundFile.status === 'added',
+                    deleted: foundFile.status === 'removed',
+                  });
+                }
+              }
+            }
+            for (const [file, commits] of Object.entries(changes)) {
+              const isAdded = commits.every((c) => c.added);
+              const isDeleted = commits.every((c) => c.deleted);
+              if (isAdded) {
+                console.log(`File ${file} was added`);
+              } else if (isDeleted) {
+                console.log(`File ${file} was deleted`);
+              } else {
+                console.log(`File ${file} was modified`);
+              }
+            }

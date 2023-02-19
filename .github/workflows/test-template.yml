@@ -1,39 +1,39 @@
----
-on:
-  workflow_call:
-    inputs:
-      foo:
-        required: true
-        type: string
-      bar:
-        required: true
-        type: string
-
-jobs:
-  set-matrix:
-    outputs:
-      compat: ${{ steps.set-compat.outputs.compat }}
-    runs-on: ubuntu-latest
-    steps:
-      - id: set-compat
-        run: |
-          if [[ "${{ inputs.foo }}" == "a/a" ]]; then
-            echo '::set-output name=compat::["a/a/a", "a/a/b"]'
-          elif [[ "${{ inputs.foo }}" == "a/b" ]]; then
-            echo '::set-output name=compat::["a/b/a"]'
-          else
-            echo '::set-output name=compat::[null]'
-          fi      
-  build:
-    runs-on: ubuntu-latest
-    needs: [set-matrix]
-    env:
-      tag_name: ${{ fromJSON(inputs.bar)[format('{0}--tag_name', inputs.foo)] }}
-      upload_url:  ${{ fromJSON(inputs.bar)[format('{0}--upload_url', inputs.foo)] }}
-    strategy:
-      matrix:
-        compat: ${{ fromJSON(needs.set-matrix.outputs.compat) }}
-    steps:
-      - id: name
-        run: echo '::set-output name=name::${{ fromJSON(needs.set-matrix.outputs.compat)[0] && format('{0}+{1}.zip', env.tag_name, matrix.compat) || format('{0}.zip', env.tag_name) }}'
-      - run: echo '${{ inputs.foo }} ${{ env.tag_name }} ${{ env.upload_url }} ${{ steps.name.outputs.name }} ${{ secrets.ACTIONS_STEP_DEBUG }}'
+# ---
+# on:
+#   workflow_call:
+#     inputs:
+#       foo:
+#         required: true
+#         type: string
+#       bar:
+#         required: true
+#         type: string
+# 
+# jobs:
+#   set-matrix:
+#     outputs:
+#       compat: ${{ steps.set-compat.outputs.compat }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - id: set-compat
+#         run: |
+#           if [[ "${{ inputs.foo }}" == "a/a" ]]; then
+#             echo '::set-output name=compat::["a/a/a", "a/a/b"]'
+#           elif [[ "${{ inputs.foo }}" == "a/b" ]]; then
+#             echo '::set-output name=compat::["a/b/a"]'
+#           else
+#             echo '::set-output name=compat::[null]'
+#           fi      
+#   build:
+#     runs-on: ubuntu-latest
+#     needs: [set-matrix]
+#     env:
+#       tag_name: ${{ fromJSON(inputs.bar)[format('{0}--tag_name', inputs.foo)] }}
+#       upload_url:  ${{ fromJSON(inputs.bar)[format('{0}--upload_url', inputs.foo)] }}
+#     strategy:
+#       matrix:
+#         compat: ${{ fromJSON(needs.set-matrix.outputs.compat) }}
+#     steps:
+#       - id: name
+#         run: echo '::set-output name=name::${{ fromJSON(needs.set-matrix.outputs.compat)[0] && format('{0}+{1}.zip', env.tag_name, matrix.compat) || format('{0}.zip', env.tag_name) }}'
+#       - run: echo '${{ inputs.foo }} ${{ env.tag_name }} ${{ env.upload_url }} ${{ steps.name.outputs.name }} ${{ secrets.ACTIONS_STEP_DEBUG }}'
